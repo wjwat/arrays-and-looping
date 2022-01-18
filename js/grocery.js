@@ -15,11 +15,7 @@ $(document).ready(function () {
 
 	function updateValues() {
 		let x = [];
-		$('#items input').each(function () {
-			if ($(this).val()) {
-				x.push($(this).val());
-			}
-		});
+		x = $('#items textarea').val().split('\n');
 		return x;
 	}
 
@@ -37,12 +33,19 @@ $(document).ready(function () {
 		})
 	}
 
+	function clearDisplay() {
+		$('#display').hide();
+		$('#display ul').text('');
+	}
+
 	// Add items to list
 	$('#add').click(function() {
 		updateValues().forEach(function(i) {
-			addItemToListOfItems(i);
+			if (i) {
+				addItemToListOfItems(i);
+			}
 		})
-		resetInputValues('#items input');
+		resetInputValues('#items textarea');
 		console.log(listOfItems);
 	})
 
@@ -50,8 +53,10 @@ $(document).ready(function () {
 		displayResult(listOfItems);
 	})
 
+	$('#clear-display').click(clearDisplay);
+
 	$('#reset').click(function () {
-		$('#display').hide();
-		$('#display ul').text('');
-	});
+		clearDisplay();
+		listOfItems = [];
+	})
 });
